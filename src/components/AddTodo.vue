@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addTodo">
+    <form @submit.prevent="onSubmit()">
       <input
         type="text"
         name="title"
@@ -12,6 +12,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "AddTodo",
   data() {
@@ -20,13 +21,9 @@ export default {
     };
   },
   methods: {
-    addTodo() {
-      const newTodo = {
-        title: this.title,
-        completed: false
-      };
-      this.$emit("add-todo", newTodo);
-      this.title = "";
+    ...mapActions(["addToDo"]),
+    onSubmit() {
+      this.addToDo(this.title);
     }
   }
 };
@@ -35,12 +32,19 @@ export default {
 <style scoped>
 form {
   display: flex;
+  margin: 15px 0px;
 }
 input[type="text"] {
   flex: 10;
-  padding: 5px;
+  padding: 10px;
+  border: 1px solid #41b883;
+  outline: 0;
 }
 input[type="submit"] {
   flex: 2;
+  background: #41b883;
+  color: #fff;
+  border: 1px #41b883 solid;
+  cursor: pointer;
 }
 </style>
